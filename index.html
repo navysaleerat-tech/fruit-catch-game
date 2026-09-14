@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนจับผลไม้ — เกมขยับตัวเล่นผ่านกล้อง</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>สวนจับผลไม้</h1>
+  <p class="sub">ยืนสองคนหน้ากล้อง คนละฝั่งจอ แต่ละคนคุมตะกร้าสีของตัวเองในโซนตัวเอง ระวัง 💣 ระเบิด — จับโดนจะเสียแต้ม</p>
+
+  <div class="mode-row" id="modeRow">
+    <button class="mode-btn active" data-mode="1">1 คน</button>
+    <button class="mode-btn" data-mode="2">2 คน</button>
+  </div>
+
+  <div class="stage">
+    <video id="cam" autoplay playsinline muted></video>
+    <canvas id="game"></canvas>
+
+    <div class="hud">
+      <div class="pill p1">🔵 <span id="score1">0</span></div>
+      <div class="pill time">⏱ <span id="time">45</span>s</div>
+      <div class="pill p2" id="p2Pill" style="display:none;">🟠 <span id="score2">0</span></div>
+    </div>
+
+    <div class="overlay" id="startOverlay">
+      <h2>พร้อมเล่นหรือยัง?</h2>
+      <p>อนุญาตให้เว็บใช้กล้องก่อน แล้วยกมือขึ้นให้เห็นในกล้อง เลือกโหมด 1 หรือ 2 คนด้านบน จากนั้นเลื่อนมือซ้าย-ขวาเพื่อควบคุมตะกร้า รับผลไม้ให้ได้เยอะที่สุดภายใน 45 วินาที และเลี่ยง 💣 ระเบิดที่จะหักแต้ม (โหมด 2 คน แต่ละฝั่งจะถูกล็อกอยู่ในโซนของตัวเอง ไม่แย่งตะกร้ากัน — โหลดโมเดลตรวจจับมือครั้งแรกอาจใช้เวลาสักครู่)</p>
+      <button id="startBtn">เปิดกล้อง &amp; เริ่มเกม</button>
+      <div class="cam-status" id="camStatus"></div>
+    </div>
+
+    <div class="overlay" id="endOverlay" style="display:none;">
+      <h2>หมดเวลา!</h2>
+      <p id="finalScoreText">คุณจับผลไม้ได้ 0 ลูก</p>
+      <div class="stats-bar" id="statsBar"></div>
+      <button id="retryBtn">เล่นอีกครั้ง</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>วิธีเชื่อมกับ OBS</h3>
+    <ol>
+      <li><strong>ถ้าอยากสตรีมเกมนี้ออกไป:</strong> เปิดไฟล์นี้ในเบราว์เซอร์ตามปกติ แล้วใน OBS ให้เพิ่ม Source ใหม่เป็น <code>Window Capture</code> (เลือกหน้าต่างเบราว์เซอร์นี้) หรือ <code>Browser Source</code> แล้วใส่ path ของไฟล์นี้ — ภาพเกมทั้งหมดรวมวิดีโอกล้องจะถูกจับไปออกอากาศทันที</li>
+      <li><strong>ถ้าอยากให้ภาพกล้องผ่านฟิลเตอร์ของ OBS ก่อนเข้าเกม:</strong> เปิด OBS → ใส่ Source กล้องจริงพร้อมฟิลเตอร์ที่ต้องการ → กด <code>เริ่ม Virtual Camera</code> จากเมนู OBS จากนั้นกลับมาที่เกมนี้ แล้วเมื่อเบราว์เซอร์ถามสิทธิ์กล้อง ให้เลือกอุปกรณ์ชื่อ <code>OBS Virtual Camera</code> แทนกล้องจริง</li>
+      <li>ถ้ามีกล้องหลายตัวและเกมไม่ได้เลือก OBS Virtual Camera ให้อัตโนมัติ ให้เปลี่ยนสิทธิ์กล้องของเว็บไซต์นี้ในตั้งค่าเบราว์เซอร์ แล้วรีเฟรชหน้าใหม่</li>
+    </ol>
+  </div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
